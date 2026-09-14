@@ -1,0 +1,19 @@
+import { env } from 'cloudflare:workers';
+import { applyAction } from '@/lib/tovant/actions';
+import type { State } from '@/lib/tovant/model';
+function session(r:Request){return r.headers.get('cookie')?.split(';').map(v=>v.trim()).find(v=>v.startsWith('tovant_demo='))?.slice(12);}
+const noStore={'Cache-Control':'no-store'};
+export async function GET(request:Request){try{const id=session(request),key=new URL(request.url).searchParams.get('key');if(!id||!key||!key.startsWith(id+'/')||!env.BUCKET)return new Response('Not found',{status:404});const object=await env.BUCKET.get(key);if(!object)return new Response('Not found',{status:404});return new Response(object.body,{headers:{'Content-Type':object.httpMetadata?.contentType||'application/octet-stream','X-Content-Type-Options':'nosniff','Cache-Control':'private, max-age=3600','Content-Security-Policy':"default-src 'none'"}});}catch{return new Response('Photo unavailable',{status:503});}}
+export async function POST(request:Request){let storedKey:string|undefined;try{
+ const origin=request.headers.get('origin');if(origin&&origin!==new URL(request.url).origin)return Response.json({error:'Invalid origin'},{status:403,headers:noStore});
+ const id=session(request);if(!id||!/^[0-9a-f-]{36}$/.test(id))return Response.json({error:'Reload the demo before uploading.'},{status:401,headers:noStore});
+ if(!env.DB||!env.BUCKET)return Response.json({error:'Photo storage is unavailable. Please retry.'},{status:503,headers:noStore});
+ if(Number(request.headers.get('content-length')||0)>5*1024*1024)return Response.json({error:'Choose a photo smaller than 4 MB.'},{status:413,headers:noStore});
+ const form=await request.formData();const file=form.get('file');if(!(file instanceof File)||file.size>4*1024*1024||file.size===0)return Response.json({error:'Choose a JPG, PNG or WebP photo under 4 MB.'},{status:400,headers:noStore});
+ const bytes=new Uint8Array(await file.arrayBuffer());const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71;const jpg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;const webp=new TextDecoder().decode(bytes.slice(0,4))==='RIFF'&&new TextDecoder().decode(bytes.slice(8,12))==='WEBP';if(!png&&!jpg&&!webp)return Response.json({error:'Only JPG, PNG and WebP images are supported.'},{status:400,headers:noStore});
+ const row=await env.DB.prepare('SELECT state, revision FROM demo_sessions WHERE id = ?').bind(id).first<{state:string;revision:number}>();if(!row)return Response.json({error:'Demo session expired.'},{status:401,headers:noStore});if(Number(form.get('revision'))!==row.revision)return Response.json({error:'Another tab changed the demo. Retry your upload.',state:JSON.parse(row.state),revision:row.revision},{status:409,headers:noStore});
+ const key=id+'/'+crypto.randomUUID()+'.'+(png?'png':jpg?'jpg':'webp');const next=applyAction(JSON.parse(row.state) as State,{type:'photo',role:form.get('role'),actor:form.get('role')==='customer'?form.get('actor'):'provider',providerId:form.get('providerId'),jobId:form.get('jobId'),data:{key,caption:form.get('caption')||file.name}});
+ await env.BUCKET.put(key,bytes,{httpMetadata:{contentType:png?'image/png':jpg?'image/jpeg':'image/webp'}});storedKey=key;
+ const result=await env.DB.prepare('UPDATE demo_sessions SET state = ?, revision = ?, updated_at = ? WHERE id = ? AND revision = ?').bind(JSON.stringify(next),row.revision+1,new Date().toISOString(),id,row.revision).run();if(result.meta.changes!==1){await env.BUCKET.delete(key);return Response.json({error:'Another change arrived first. Retry your upload.'},{status:409,headers:noStore});}
+ return Response.json({state:next,revision:row.revision+1},{headers:noStore});
+ }catch(e){if(storedKey&&env.BUCKET)await env.BUCKET.delete(storedKey).catch(()=>{});console.error('Photo upload failed',e);return Response.json({error:e instanceof Error?e.message:'Could not save your photo. Please retry.'},{status:400,headers:noStore});}}

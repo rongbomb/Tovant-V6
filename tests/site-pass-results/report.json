@@ -1,0 +1,394 @@
+{
+  "base": "http://127.0.0.1:8787",
+  "at": "2026-09-13T04:16:02.010Z",
+  "total": 64,
+  "passed": 64,
+  "failed": 0,
+  "issues": [],
+  "results": [
+    {
+      "role": "guest",
+      "name": "route /",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /find",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /match",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /provider/ridgeline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /vetting",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /support",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /legal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /careers",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /press",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /payouts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /login",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /signup",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /signup/owner",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /reset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /compare",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "route /this-route-does-not-exist",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "protected /jobs redirects to login",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/login?next=%2Fjobs"
+    },
+    {
+      "role": "guest",
+      "name": "protected /dashboard redirects to login",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/login?next=%2Fdashboard"
+    },
+    {
+      "role": "guest",
+      "name": "traditional top nav exists",
+      "ok": true,
+      "detail": "y=0 w=1280"
+    },
+    {
+      "role": "guest",
+      "name": "nav drag handle present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "open provider from find",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/provider/southpaw"
+    },
+    {
+      "role": "guest",
+      "name": "guest request quote goes to owner signup",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/signup/owner?next=%2Fprovider%2Fsouthpaw%3Fquote%3D1"
+    },
+    {
+      "role": "guest",
+      "name": "support demo copy",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "reset honesty copy",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "guest",
+      "name": "no console/page/http500 errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "login lands on jobs",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/jobs"
+    },
+    {
+      "role": "owner",
+      "name": "route /jobs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /drafts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /messages",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /settings",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /history",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /work/garage",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "route /work/guide",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "match submit advances or saves",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/match?view=quotes"
+    },
+    {
+      "role": "owner",
+      "name": "support ticket saves in demo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "settings save bar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "owner",
+      "name": "no console/page/http500 errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "login lands on dashboard",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/dashboard"
+    },
+    {
+      "role": "provider",
+      "name": "route /dashboard",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /dashboard?view=requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /dashboard?view=schedule",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /provider-settings?tab=Calendar%20sync",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /dashboard?view=money",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /provider-settings",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /work/calendar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /work/customers",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /work/services",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /work/money",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /messages",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "route /provider/ridgeline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider",
+      "name": "request queue has Quote action",
+      "ok": true,
+      "detail": "empty queue — acceptable"
+    },
+    {
+      "role": "provider",
+      "name": "open job detail",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/work/jobs/TV-1002"
+    },
+    {
+      "role": "provider",
+      "name": "no console/page/http500 errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider-harlan",
+      "name": "harlan login",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/dashboard"
+    },
+    {
+      "role": "provider-harlan",
+      "name": "harlan dashboard",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "provider-harlan",
+      "name": "no console/page/http500 errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "login lands on admin",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/admin"
+    },
+    {
+      "role": "admin",
+      "name": "admin shell loads",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "admin rail Verify",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "admin rail Catalog",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "admin rail Publish log",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "admin rail Content",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "role": "admin",
+      "name": "admin can open owner settings via role switch or redirect",
+      "ok": true,
+      "detail": "http://127.0.0.1:8787/settings"
+    },
+    {
+      "role": "admin",
+      "name": "no console/page/http500 errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}
